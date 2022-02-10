@@ -146,14 +146,14 @@ function getWorkingHours(empCheck) {
    function isAllFulltimeWage(dailyWage) {
        return dailyWage.includes("160");
    }
-   console.log("UC6E - Check All Element have Full Time Wage: " +
+   console.log("Check All Element have Full Time Wage: " +
                fullDayWageArr.every(isAllFulltimeWage));
    
    // UC 7F:- Check if there is any Part Time Wage
    function isAnyPartTimeWage(dailyWage) {
        return dailyWage.includes("80");
    }
-   console.log("UC7F - Check if there is any Part Time Wage: " +
+   console.log("Check if there is any Part Time Wage: " +
                mapDayWithWageArr.some(isAnyPartTimeWage));
    
    // UC 7G:- Find the number of days the Employee Worked
@@ -189,7 +189,7 @@ function getWorkingHours(empCheck) {
             function totalWages(totalWage, dailyWage) {
                 return totalWage + dailyWage;
             }
-            console.log("UC8 - Total Emp Wage: " +
+            console.log(" Total Emp Wage: " +
                 Array.from(empDailyWageMap.values()).reduce(totalWages, 0));
         }
 //UC9//
@@ -225,7 +225,7 @@ function getWorkingHours(empCheck) {
     let totalSalary = empDailyWageArr
                       .filter(dailyWage => dailyWage > 0)
                       .reduce(findTotal, 0);
-    console.log("UC9A - Emp Wage with Arrow. " + "\n\tTotal Hours: " +
+    console.log("Emp Wage with Arrow. " + "\n\tTotal Hours: " +
                 totalHours + ", Total Wages: " + totalSalary);
     let nonWorkingDays = new Array();
     let partWorkingDays = new Array();
@@ -239,4 +239,24 @@ function getWorkingHours(empCheck) {
     console.log("Part Working Days: " + partWorkingDays);
     console.log("Non Working Days: " + nonWorkingDays);
 }
-        
+//UC10//
+let totalEmpHrs = 0;
+let totalWorkingDays = 0;
+let empDailyHrsAndWageArr = new Array();
+while (totalEmpHrs <= MAX_HRS_IN_MONTH && totalWorkingDays < NUM_OF_WORKING_DAYS) {
+    totalWorkingDays++;
+    let empCheck = Math.floor(Math.random() * 10) % 3;
+    let empHrs = getWorkingHours(empCheck);
+    totalEmpHrs += empHrs;
+    empDailyHrsAndWageArr.push(
+    {
+        dayNum:totalWorkingDays,
+        dailyHours:empHrs,
+        dailyWage: calcDailyWage(empHrs),
+        toString() {
+            return "\nDay" + this.dayNum + " => Working Hours is " + this.dailyHours +
+                    " And Wage Earned = " + this.dailyWage
+        },
+    });
+}
+console.log("\nShowing Daily Hours Worked and Wage Earned: " + empDailyHrsAndWageArr);
